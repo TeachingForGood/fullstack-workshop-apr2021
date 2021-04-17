@@ -6,5 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'tfg-course';
+  title = 'learning-angular';
+  routes = [
+    {
+      url: '/review',
+      text: 'Write Review',
+      icon: 'edit'
+    }
+  ];
 }
