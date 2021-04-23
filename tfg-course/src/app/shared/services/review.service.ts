@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Review } from '../models/review.model';
+import { ApiGetReviewsResponse, Review } from '../models/review.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,12 @@ export class ReviewService {
   /**
    * GET all movie reviews from API.
    */
-  getReviews() {
-    return this.http.get(`${environment.apiUrl}/api/v1/review`);
+  getReviews(): Observable<Review[]> {
+    return this.http.get<ApiGetReviewsResponse>(`${environment.apiUrl}/api/v1/review`)
+    .pipe(
+      map(
+        (res: ApiGetReviewsResponse) => res.reviews.map(r => new Review(r))
+      )
+    );
   }
 }
