@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { ApiGetReviewsResponse, Review } from '../models/review.model';
+import { ApiCreateReviewResponse, ApiGetReviewsResponse, Review } from '../models/review.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,8 @@ export class ReviewService {
   /**
    * POST a new movie review to the API.
    */
-  createReview(review: Review) {
-    return this.http.post(`${environment.apiUrl}/v1/review`, review);
+  createReview(review: Review): Observable<ApiCreateReviewResponse> {
+    return this.http.post<ApiCreateReviewResponse>(`${environment.apiUrl}/v1/review`, review);
   }
 
   /**

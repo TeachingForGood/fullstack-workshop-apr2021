@@ -21,3 +21,8 @@ export class ApiReview {
 export class ApiGetReviewsResponse {
   reviews!: ApiReview[];
 }
+
+export class ApiCreateReviewResponse {
+  success!: boolean;
+  message!: string;
+}
