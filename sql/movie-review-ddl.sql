@@ -5,6 +5,9 @@ CREATE TABLE `movie_categories` (
   `comment` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`code`));
 
+ALTER TABLE `teaching_for_good`.`movie_categories` 
+ADD COLUMN `is_obsolete` CHAR(1) NULL AFTER `comment`;
+
 
 CREATE TABLE `teaching_for_good`.`movies` (
   `id` INT NOT NULL,
@@ -19,6 +22,10 @@ CREATE TABLE `teaching_for_good`.`movies` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+ALTER TABLE `teaching_for_good`.`movies` 
+CHANGE COLUMN `id` `id` INT NOT NULL AUTO_INCREMENT ;
+
+
 CREATE TABLE `teaching_for_good`.`theatres` (
   `id` INT NOT NULL,
   `name` VARCHAR(100) NOT NULL,
@@ -28,6 +35,12 @@ CREATE TABLE `teaching_for_good`.`theatres` (
   `zip5` CHAR(5) NOT NULL,
   `zip4` VARCHAR(45) NULL,
   PRIMARY KEY (`id`));
+
+ALTER TABLE `teaching_for_good`.`theatres` 
+ADD COLUMN `state` CHAR(2) NOT NULL AFTER `city`;
+
+ALTER TABLE `teaching_for_good`.`theatres` 
+CHANGE COLUMN `id` `id` INT NOT NULL AUTO_INCREMENT ;
 
 CREATE TABLE `teaching_for_good`.`theatre_movie_map` (
   `id` INT NOT NULL,
@@ -53,6 +66,8 @@ ADD CONSTRAINT `movie_FK`
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
+ALTER TABLE `teaching_for_good`.`theatre_movie_map` 
+CHANGE COLUMN `id` `id` INT NOT NULL AUTO_INCREMENT ;
 
 CREATE TABLE `teaching_for_good`.`theatre_movie_show_times` (
   `id` INT NOT NULL,
@@ -66,6 +81,8 @@ CREATE TABLE `teaching_for_good`.`theatre_movie_show_times` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+ALTER TABLE `teaching_for_good`.`theatre_movie_show_times` 
+CHANGE COLUMN `id` `id` INT NOT NULL AUTO_INCREMENT ;
 
 CREATE TABLE `teaching_for_good`.`users` (
   `user_name` VARCHAR(50) NOT NULL,
@@ -93,3 +110,6 @@ CREATE TABLE `teaching_for_good`.`movie_user_reviews` (
     REFERENCES `teaching_for_good`.`movies` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+ALTER TABLE `teaching_for_good`.`movie_user_reviews` 
+CHANGE COLUMN `id` `id` INT NOT NULL AUTO_INCREMENT ;
