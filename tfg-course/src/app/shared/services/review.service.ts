@@ -16,14 +16,14 @@ export class ReviewService {
    * POST a new movie review to the API.
    */
   createReview(review: Review) {
-    return this.http.post(`${environment.apiUrl}/api/v1/review`, review);
+    return this.http.post(`${environment.apiUrl}/v1/review`, review);
   }
 
   /**
    * GET all movie reviews from API.
    */
   getReviews(): Observable<Review[]> {
-    return this.http.get<ApiGetReviewsResponse>(`${environment.apiUrl}/api/v1/review`)
+    return this.http.get<ApiGetReviewsResponse>(`${environment.apiUrl}/v1/review`)
     .pipe(
       map(
         (res: ApiGetReviewsResponse) => res.reviews.map(r => new Review(r))

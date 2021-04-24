@@ -27,7 +27,7 @@ userLogin = async (req, res) => {
   res.status(200).json({
     token: token,
     expiresIn: 14400,
-    userId
+    username
   });
 }
 
@@ -43,7 +43,7 @@ userSignUp = async (req, res) => {
   res.status(200).json({
     token: token,
     expiresIn: 3600,
-    userId
+    username
   });
 }
 

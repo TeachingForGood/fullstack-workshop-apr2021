@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { AuthService } from './shared/services/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   title = 'learning-angular';
   routes = [
     {
@@ -14,4 +16,24 @@ export class AppComponent {
       icon: 'edit'
     }
   ];
+  $subscription = new Subscription();
+  isAuthenticated = false;
+  constructor(private authService: AuthService) {
+    this.$subscription.add(this.authService.authStatusChanges().subscribe(
+      (authenticated) => this.isAuthenticated = authenticated
+    ));
+    this.authService.autoAuthUser();
+  }
+
+  ngOnDestroy() {
+    this.$subscription.unsubscribe();
+  }
+
+  /**
+   * Call the AuthService to log the user out.
+   */
+  logout() {
+    this.authService.logout();
+  }
 }
+

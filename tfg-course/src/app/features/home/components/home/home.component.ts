@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { Review } from 'src/app/shared/models/review.model';
 import { ReviewService } from 'src/app/shared/services/review.service';
 
 @Component({
@@ -11,6 +12,8 @@ import { ReviewService } from 'src/app/shared/services/review.service';
 export class HomeComponent implements OnInit, OnDestroy {
   filterInput = new FormControl('');
   subscription$ = new Subscription();
+  reviews: Review[] = [];
+  filteredReviews: Review[] = [];
   constructor(private reviewService: ReviewService) {
     this.inputChangeHandler();
     this.getReviews();
@@ -26,7 +29,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   inputChangeHandler(): void {
     this.subscription$.add(this.filterInput.valueChanges.subscribe(
       (input) => {
-        console.log(input);
+        this.filteredReviews = this.reviews.filter((review) => review.title.toLowerCase().includes(input.toLowerCase()));
       }
     ));
   }
@@ -34,7 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   getReviews(): void {
     this.reviewService.getReviews().subscribe(
       (res) => {
-        console.log(res);
+        this.reviews = res;
       }
     )
   }
