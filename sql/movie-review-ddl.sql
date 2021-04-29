@@ -8,6 +8,7 @@ CREATE TABLE `movie_categories` (
 ALTER TABLE `teaching_for_good`.`movie_categories` 
 ADD COLUMN `is_obsolete` CHAR(1) NULL AFTER `comment`;
 
+ALTER TABLE movie_categories ALTER is_obsolete SET DEFAULT 'N';
 
 CREATE TABLE `teaching_for_good`.`movies` (
   `id` INT NOT NULL,
@@ -25,7 +26,15 @@ CREATE TABLE `teaching_for_good`.`movies` (
 ALTER TABLE `teaching_for_good`.`movies` 
 CHANGE COLUMN `id` `id` INT NOT NULL AUTO_INCREMENT ;
 
+ALTER TABLE `teaching_for_good`.`movies` 
+ADD UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE;
 
+CREATE TABLE `teaching_for_good`.`movies_backup` (
+  `id` INT NOT NULL,
+  `name` VARCHAR(200) NOT NULL,
+  `category` CHAR(2) NOT NULL,
+  `release_date` DATETIME NOT NULL);
+  
 CREATE TABLE `teaching_for_good`.`theatres` (
   `id` INT NOT NULL,
   `name` VARCHAR(100) NOT NULL,
@@ -68,6 +77,15 @@ ADD CONSTRAINT `movie_FK`
 
 ALTER TABLE `teaching_for_good`.`theatre_movie_map` 
 CHANGE COLUMN `id` `id` INT NOT NULL AUTO_INCREMENT ;
+
+CREATE TABLE `teaching_for_good`.`theatre_movie_map_history` (
+  `theatre_movie_map_id` INT NOT NULL,
+  `theatre_id` INT NOT NULL,
+  `movie_id` INT NOT NULL,
+  `show_start_date` DATETIME NULL,
+  `show_end_date` DATETIME NULL,
+  `created_date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP);
+
 
 CREATE TABLE `teaching_for_good`.`theatre_movie_show_times` (
   `id` INT NOT NULL,
@@ -113,3 +131,6 @@ CREATE TABLE `teaching_for_good`.`movie_user_reviews` (
 
 ALTER TABLE `teaching_for_good`.`movie_user_reviews` 
 CHANGE COLUMN `id` `id` INT NOT NULL AUTO_INCREMENT ;
+
+ALTER TABLE movie_user_reviews
+ADD CONSTRAINT CHK_Rating CHECK (rating <= 5 and rating > 0);
