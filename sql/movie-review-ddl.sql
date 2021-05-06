@@ -24,6 +24,9 @@ CREATE TABLE `teaching_for_good`.`movies` (
     ON UPDATE NO ACTION);
 
 ALTER TABLE `teaching_for_good`.`movies` 
+CHANGE COLUMN `release_date` `release_date` DATETIME NULL ;
+
+ALTER TABLE `teaching_for_good`.`movies` 
 CHANGE COLUMN `id` `id` INT NOT NULL AUTO_INCREMENT ;
 
 ALTER TABLE `teaching_for_good`.`movies` 
