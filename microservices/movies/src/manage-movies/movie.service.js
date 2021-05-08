@@ -19,7 +19,7 @@ class MovieService {
     SELECT_ALL_MOVIE = `
         SELECT m.id, m.name, m.category categoryCode, mc.description categoryDesc, m.release_date releaseDate
         from teaching_for_good.movies m
-        inner join movie_categories mc on m.category = mc.code;
+        inner join movie_categories mc on m.category = mc.code
     `;
 
     SELECT_MOVIE_BY_ID = `
