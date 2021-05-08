@@ -12,6 +12,12 @@ const BASE_URL = '/fullstack';
 
 app.use(BASE_URL, routes);
 
+app.get('/health', (req, res)=> {
+  res.json({
+    'status': 'healthy'
+  });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
