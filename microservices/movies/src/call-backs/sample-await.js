@@ -1,39 +1,31 @@
 const { readFile } = require('fs').promises;
 
 readLocalFile = async() => {
-    try {
-        let data;
-        try {
-            data = await readFile('/Users/rajesh.pandian/Workspaces/teaching-for-good/fullstack-workshop-apr2021/microservices/movies/src/call-backs/input.txt', { encoding: 'utf8' });
-        } catch (err) {
-            console.error("Error reading file", err);
-        }
+    let data;
+    
+    data = await readFile('/Users/rajesh.pandian/Workspaces/teaching-for-good/fullstack-workshop-apr2021/microservices/movies/src/call-backs/input.txt', { encoding: 'utf8' });    
 
-        //console.log(data.toString());
-        console.log((data !== undefined)? data.toString(): 'No Data');
-        console.log("Program Ended 1");
-    } catch (err) {
-        console.error("Error in program: " , err);
-    }
+    //console.log(data.toString());
+    console.log((data !== undefined)? data.toString(): 'No Data');
+    console.log("Program Ended 1");
+    
+    let promiseReturned = readFile('/Users/rajesh.pandian/Workspaces/teaching-for-good/fullstack-workshop-apr2021/microservices/movies/src/call-backs/output.txt', { encoding: 'utf8' });
+    promiseReturned
+       .then((data) => {
+              console.log(data);
+              console.log("Output 2 Ended");
+       })
+       .catch((error) => { 
+              console.error('Got error reading file: ', error);
+       });
+
+    console.log("Return data");
 };
 
-readAnotherFile = async() => {
+(async () => {
     try {
-        let data;
-        try {
-            data = await readFile('/Users/rajesh.pandian/Workspaces/teaching-for-good/fullstack-workshop-apr2021/microservices/movies/src/call-backs/output.txt', { encoding: 'utf8' });
-        } catch (err) {
-            console.error("Error reading file", err);
-        }
-
-        //console.log(data.toString());
-        console.log((data !== undefined)? data.toString(): 'No Data');
-        console.log("Program Ended 2");
-    } catch (err) {
-        console.error("Error in program: " , err);
+        await readLocalFile();    
+    } catch (error) {
+        console.error('Caugt the error: Error Processing File: ', error);
     }
-};
-
-
-readLocalFile();
-readAnotherFile();
+})();
