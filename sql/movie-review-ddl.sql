@@ -112,6 +112,9 @@ CREATE TABLE `teaching_for_good`.`users` (
   `email` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`user_name`));
 
+ALTER TABLE `teaching_for_good`.`users` 
+ADD COLUMN `password` VARCHAR(300) NOT NULL AFTER `user_name`;
+
 CREATE TABLE `teaching_for_good`.`movie_user_reviews` (
   `id` INT NOT NULL,
   `user_name` VARCHAR(50) NOT NULL,
