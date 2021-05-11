@@ -31,9 +31,11 @@ class UserController {
     updatePassword = async (req, res) => {
         try {
             const userName = req.params.userName
-            const { password } = req.body;
-            await this.userService.updatePassword(password, userName);
+            const { newPassword } = req.body;
+
+            await this.userService.updatePassword(newPassword, userName);
             return res.json({'result': 'success'});
+            
         } catch (error) {
             console.error(error);
             return res.status(500).json({ status: 'Failed', message: 'Error updating user password' });

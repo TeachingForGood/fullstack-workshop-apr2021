@@ -86,12 +86,22 @@ class UserMiddleware {
         const result = await this.userService.retrieveUserById(req.params.userName);
         if (result && result.length === 0) {
             errorList.push('User name is invalid')
+        } else {
+            const currentUser  = result[0];
+            const isPasswordMatch = await this.userService.comparePassword(userDetails.currentPassword, currentUser.password);
+            if(!isPasswordMatch) {
+                errorList.push('Current password mismatch')
+            }
         }
 
-        if (!userDetails.password || userDetails.password.trim() === '') {
-            errorList.push('Password cannot be Empty')
-        } else if (!!userDetails && userDetails.password.trim().length > 100) {
-            errorList.push('Password length cannot be greater than 100')
+        if (!userDetails.currentPassword || userDetails.currentPassword.trim() === '') {
+            errorList.push('Current password cannot be Empty')
+        }
+
+        if (!userDetails.newPassword || userDetails.newPassword.trim() === '') {
+            errorList.push('New password cannot be Empty')
+        } else if (!!userDetails && userDetails.newPassword.length > 100) {
+            errorList.push('New password length cannot be greater than 100')
         }
 
         if (errorList.length > 0) {

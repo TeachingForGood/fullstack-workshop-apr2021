@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 const DatabaseService = require('../database/database.service');
 
 class UserService {
@@ -28,10 +30,12 @@ class UserService {
     
     async createUser({ userName, firstName, lastName, email, password }) {
         try {
+            
+            const hashPassword = await this.encryptPassword(password);
             console.log(userName, firstName, lastName, email, password);
             // Insert into User
             const { insertId } = await this.databaseService.query(this.INSERT_USER, 
-                [ userName, firstName, lastName, email, password ]);
+                [ userName, firstName, lastName, email, hashPassword ]);
       
             // Return just the insertId
             return insertId;
@@ -55,8 +59,9 @@ class UserService {
 
     async updatePassword(password , userName) {
         try {
+            const hashPassword = await this.encryptPassword(password);
             const { updateId } = await this.databaseService.query(this.CHANGE_PASSWORD_USER, 
-                [ password, userName ]);
+                [ hashPassword, userName ]);
       
             return updateId;
         } catch (error) {
@@ -73,6 +78,15 @@ class UserService {
             console.error(error);
             throw error;
           }
+    }
+
+    async encryptPassword (password) {
+        const hashPassword = await bcrypt.hash(password, saltRounds)
+        return hashPassword;
+    }
+
+    async comparePassword(password, hashedPassword) {
+        return await bcrypt.compare(password, hashedPassword);
     }
 }
 
