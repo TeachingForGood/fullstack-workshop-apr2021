@@ -12,6 +12,5 @@ router.put('/update/:userName', userMiddleware.validateUpdateUser, userControlle
 
 router.put('/updatePassword/:userName', userMiddleware.validateUpdatePassword, userController.updatePassword);
 
-// router.delete('/delete/:userName', userMiddleware.validateDeleteUser, userController.deleteUser);
 
 module.exports = router;
