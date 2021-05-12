@@ -11,6 +11,7 @@ class AuthMiddleware {
         if(!!jwt) {
             try {
                 const payload = await this.oAuth2Service.validateJWT(jwt);    
+                req.user = payload.profile;
                 console.log(payload);
                 next();
             } catch (error) {

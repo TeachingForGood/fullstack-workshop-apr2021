@@ -52,7 +52,7 @@ class ReviewService {
           }
     }
 
-    async createUpdateMovieReview({ userName, movieId, rating, comments }) {
+    async createUpdateMovieReview(userName, { movieId, rating, comments }) {
         try {
             console.log(userName, movieId, rating, comments);
             // Insert into User

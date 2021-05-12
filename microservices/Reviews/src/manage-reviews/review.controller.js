@@ -19,7 +19,8 @@ class ReviewController {
     createUpdateMovieReview = async (req, res) => {
         try {
             const reviewDetails = req.body;
-            await this.reviewService.createUpdateMovieReview(reviewDetails);
+            const userName = req.user.userName;
+            await this.reviewService.createUpdateMovieReview(userName, reviewDetails);
             return res.json({result: 'success'});
         } catch (error) {
             console.error(error);

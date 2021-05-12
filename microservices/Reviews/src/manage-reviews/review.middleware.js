@@ -11,15 +11,6 @@ class ReviewMiddleware {
         const reviewDetails = req.body;
         let errorList = [];
         
-        if (!reviewDetails.userName || reviewDetails.userName.trim() === '') {
-            errorList.push('User name cannot be Empty');
-        } else {
-            const result = await this.userService.retrieveUserById(reviewDetails.userName);
-            if (!result || result.length == 0) {
-                errorList.push('User name does not exist');
-            }
-        }
-
         if (reviewDetails.movieId <= 0) {
             errorList.push('Movie Id has to be greater than zero');
         } else if (isNaN(reviewDetails.movieId)) {
