@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const privateKEY = fs.readFileSync(path.resolve(__dirname, './keys/private_key.pem'));
-const publicKey = fs.readFileSync(path.resolve(__dirname, './keys/public_key.pem'));
+const privateKEY = fs.readFileSync(path.resolve(__dirname, './keys/private.pem'));
+const publicKey = fs.readFileSync(path.resolve(__dirname, './keys/public.pem'));
 
 // These are loaded into process.env from secrets manager
 const config = {
