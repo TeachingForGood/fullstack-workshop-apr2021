@@ -8,7 +8,9 @@ const reviewController = new ReviewController();
 const reviewMiddleware = new ReviewMiddleware();
 const authMiddleware = new AuthMiddleware();
 
-router.post('/createUpdateReview', authMiddleware.validateAuthentication, reviewMiddleware.validateMovieReview, reviewController.createUpdateMovieReview);
+router.use(authMiddleware.validateAuthentication);
+
+router.post('/createUpdateReview', reviewMiddleware.validateMovieReview, reviewController.createUpdateMovieReview);
 
 router.get('/search', reviewController.retrieveMovieReviews);
 

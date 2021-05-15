@@ -11,23 +11,22 @@ describe('Review Controller Test', () => {
     });
 
     it('should error out - No User Name', () => {
-        const res = getResponseObject();
-
         const reviewController = new ReviewController();
         const req = {};
+        const res = getResponseObject();
         reviewController.createUpdateMovieReview(req, res);
         console.log(res);
         expect(res.status).to.equal(500);
     });
 
     it('should error out - No Movie Id', async () => {
-        const res = getResponseObject();
-
         const reviewController = new ReviewController();
 
         const req = {
             user: { userName: 'rpandian' }
         };
+        const res = getResponseObject();
+
         await reviewController.createUpdateMovieReview(req, res);
         console.log(res);
         expect(res.status).to.equal(500);
@@ -35,16 +34,16 @@ describe('Review Controller Test', () => {
     });
 
     it('should error out - Sucess', async () => {
-        const res = getResponseObject();
-
         const reviewController = new ReviewController();
         sandbox.stub(reviewController.reviewService, 'createUpdateMovieReview');
-        reviewController.reviewService.createUpdateMovieReview.returns({});
+        reviewController.reviewService.createUpdateMovieReview.returns({ });
 
         const req = {
             body: { movieId: 3, rating: '4', comments: 'Good Movie' },
             user: { userName: 'rpandian' }
         };
+        const res = getResponseObject();
+
         await reviewController.createUpdateMovieReview(req, res);
         console.log(res);
         expect(res.status).to.equal(200);
